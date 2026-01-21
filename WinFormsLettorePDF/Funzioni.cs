@@ -64,15 +64,23 @@ namespace WinFormsLettorePDF
 
         public static void Save(string path, int page, int pageIndex)
         {
-            File.WriteAllText("memo.json", JsonSerializer.Serialize(new Memo{Page = page, PageIndex = pageIndex, Path = path}));
+            File.WriteAllText(GetMemoPath(), JsonSerializer.Serialize(new Memo{Page = page, PageIndex = pageIndex, Path = path}));
         }
         public static (string, int, int) Load()
         {
-            if(File.Exists("memo.json") == false) return (string.Empty, 0, 0);
-            var lines = File.ReadAllLines("memo.json");
+            if(File.Exists(GetMemoPath()) == false) return (string.Empty, 0, 0);
+            var lines = File.ReadAllLines(GetMemoPath());
             var memo = JsonSerializer.Deserialize<Memo>(string.Join("", lines));
             if(memo == null) return (string.Empty, 0, 0);
             return (memo.Path, memo.Page, memo.PageIndex);
+        }
+        private static string GetMemoPath()
+        {
+            string appData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            string appDir = Path.Combine(appData, "PDFReader");
+            Directory.CreateDirectory(appDir);
+            return Path.Combine(appDir, "memo.json");
+
         }
     }
 }
