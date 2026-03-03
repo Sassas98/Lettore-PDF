@@ -49,10 +49,29 @@ namespace WinFormsLettorePDF
                 0,
                 new System.Globalization.CultureInfo("it-IT")
             );
+            synth.Speak(line.Fix());
+        }
 
+        public static string Fix(this string text)
+        {
+            string result = "";
 
+            for (int i = 0; i < text.Length; i++)
+            {
+                char c = text[i];
+                if (char.IsLetterOrDigit(c)
+                    && BetweenSpaces(text, i)) i++;
+                result += c;
+            }
+            return result;
+        }
 
-            synth.Speak(line);
+        private static bool BetweenSpaces(string text, int index)
+        {
+            if(index < 0 || index >= text.Length) return false;
+            bool p = index == 0 || char.IsWhiteSpace(text[index - 1]);
+            bool n = index == text.Length - 1 || char.IsWhiteSpace(text[index + 1]);
+            return p && n;
         }
 
         public class Memo

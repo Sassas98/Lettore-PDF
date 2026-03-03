@@ -7,7 +7,7 @@ namespace WinFormsLettorePDF
 
     public partial class Form1 : Form
     {
-        private bool play = false, continua = false;
+        private bool play = false;
         private string filePath = "";
         private int page = 0;
         private int pageIndex = 0;
@@ -54,7 +54,6 @@ namespace WinFormsLettorePDF
                         LeggiPagina(pagina);
                         if (!play) break;
                         numericUpDown1.Value = ++page;
-                        if (continua == false) break;
                         pagina = pages[page];
                     }
                 });
@@ -94,12 +93,6 @@ namespace WinFormsLettorePDF
             if (play) numericUpDown1.Value = this.page;
             else this.page = (int)numericUpDown1.Value;
             Funzioni.Save(this.filePath, this.page, this.pageIndex);
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            if (play) checkBox1.Checked = this.continua;
-            else this.continua = checkBox1.Checked;
         }
 
         private void Form1_Load(object sender, EventArgs e)

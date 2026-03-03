@@ -31,7 +31,6 @@
             button1 = new Button();
             textBox1 = new TextBox();
             numericUpDown1 = new NumericUpDown();
-            checkBox1 = new CheckBox();
             label1 = new Label();
             label2 = new Label();
             openFileDialog1 = new OpenFileDialog();
@@ -61,21 +60,9 @@
             numericUpDown1.Location = new Point(29, 142);
             numericUpDown1.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numericUpDown1.Name = "numericUpDown1";
-            numericUpDown1.Size = new Size(284, 23);
+            numericUpDown1.Size = new Size(482, 23);
             numericUpDown1.TabIndex = 2;
             numericUpDown1.ValueChanged += numericUpDown1_ValueChanged;
-            // 
-            // checkBox1
-            // 
-            checkBox1.AutoSize = true;
-            checkBox1.ForeColor = SystemColors.ControlLight;
-            checkBox1.Location = new Point(325, 146);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(186, 19);
-            checkBox1.TabIndex = 3;
-            checkBox1.Text = "Continua alla prossima pagina";
-            checkBox1.UseVisualStyleBackColor = true;
-            checkBox1.CheckedChanged += checkBox1_CheckedChanged;
             // 
             // label1
             // 
@@ -111,7 +98,6 @@
             ClientSize = new Size(535, 269);
             Controls.Add(label2);
             Controls.Add(label1);
-            Controls.Add(checkBox1);
             Controls.Add(numericUpDown1);
             Controls.Add(textBox1);
             Controls.Add(button1);
@@ -128,7 +114,6 @@
         private Button button1;
         private TextBox textBox1;
         private NumericUpDown numericUpDown1;
-        private CheckBox checkBox1;
         private Label label1;
         private Label label2;
         private OpenFileDialog openFileDialog1;
