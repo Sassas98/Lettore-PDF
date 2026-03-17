@@ -1,5 +1,6 @@
 
 
+using System.Windows.Forms.Design.Behavior;
 using static UglyToad.PdfPig.Core.PdfSubpath;
 
 namespace WinFormsLettorePDF
@@ -12,6 +13,47 @@ namespace WinFormsLettorePDF
         private int page = 0;
         private int pageIndex = 0;
         private List<List<string>> pages = [];
+        private const int WM_APPCOMMAND = 0x0319;
+        private const int APPCOMMAND_MEDIA_PLAY_PAUSE = 14;
+        private const int APPCOMMAND_MEDIA_STOP = 13;
+        private const int APPCOMMAND_MEDIA_NEXTTRACK = 11;
+        private const int APPCOMMAND_MEDIA_PREVIOUSTRACK = 12;
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == WM_APPCOMMAND)
+            {
+                int cmd = GET_APPCOMMAND_LPARAM(m.LParam);
+
+                switch (cmd)
+                {
+                    case APPCOMMAND_MEDIA_PLAY_PAUSE:
+                        button1_Click(null!, null!);
+                        m.Result = IntPtr.Zero;
+                        return;
+
+                    case APPCOMMAND_MEDIA_STOP:
+                        m.Result = IntPtr.Zero;
+                        return;
+
+                    case APPCOMMAND_MEDIA_NEXTTRACK:
+                        m.Result = IntPtr.Zero;
+                        return;
+
+                    case APPCOMMAND_MEDIA_PREVIOUSTRACK:
+                        m.Result = IntPtr.Zero;
+                        return;
+                }
+            }
+
+            base.WndProc(ref m);
+        }
+
+        private static int GET_APPCOMMAND_LPARAM(IntPtr lParam)
+        {
+            return ((short)(((long)lParam >> 16) & 0xFFFF)) & ~0xF000;
+        }
+
         public Form1()
         {
             InitializeComponent();
@@ -62,6 +104,7 @@ namespace WinFormsLettorePDF
             {
                 play = false;
                 button1.Text = "Play";
+                Funzioni.StopLine();
             }
         }
 

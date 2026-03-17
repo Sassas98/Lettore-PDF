@@ -40,9 +40,17 @@ namespace WinFormsLettorePDF
             return result;
         }
 
+        private static SpeechSynthesizer? synthesizer;
+
+        public static void StopLine()
+        {
+            synthesizer?.Pause();
+        }
+
         public static void ReadLine(string line)
         {
             using var synth = new SpeechSynthesizer();
+            synthesizer = synth;
             synth.SelectVoiceByHints(
                 VoiceGender.NotSet,
                 VoiceAge.NotSet,
@@ -50,6 +58,7 @@ namespace WinFormsLettorePDF
                 new System.Globalization.CultureInfo("it-IT")
             );
             synth.Speak(line.Fix());
+            synthesizer = null;
         }
 
         public static string Fix(this string text)
